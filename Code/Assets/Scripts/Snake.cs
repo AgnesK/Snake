@@ -11,6 +11,12 @@ public class Snake : MonoBehaviour {
 	public Vector2 direction = Vector2.right;
 	public float movementSpeed;
 
+	// Singleton
+	static private Snake instance = null;
+	static public Snake getInstance() {
+		return Snake.instance;
+	}
+
 	// Keep Track of Tail
 	List<Transform> tail = new List<Transform>();
 
@@ -22,6 +28,7 @@ public class Snake : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Snake.instance = this;
 		InvokeRepeating ("Move", 0.05f, movementSpeed);
 	}
 	

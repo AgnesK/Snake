@@ -35,6 +35,8 @@ public class Snake : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// Move in a new Direction?
+
+		// Keyboard Input
 		if (Input.GetKey (KeyCode.RightArrow))
 			direction = Vector2.right;
 		else if (Input.GetKey (KeyCode.DownArrow))
@@ -43,6 +45,35 @@ public class Snake : MonoBehaviour {
 			direction = Vector2.left;
 		else if (Input.GetKey (KeyCode.UpArrow))
 			direction = Vector2.up;
+
+		// Mouse/Tap Input
+		if (Input.GetMouseButtonDown(0)) {
+			Debug.Log ("I clicked somewhere");
+			// get position of click
+			Vector2 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+			Debug.Log (clickPosition);
+
+			// Check if you are going vertically or horizontally
+			// snake is going left or right
+			if (direction == Vector2.right || direction == Vector2.left) {
+				// click above the snake to go up
+				if (transform.position.y < clickPosition.y) {
+					direction = Vector2.up;
+				} // click below the snake to go down
+				else {
+					direction = Vector2.down;
+				}
+			} // snake is going up or down
+			else {
+				// click right the snake to go right
+				if (transform.position.x < clickPosition.x) {
+					direction = Vector2.right;
+				} // click left of the snake to go left
+				else {
+					direction = Vector2.left;
+				}
+			}
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D collider) {
